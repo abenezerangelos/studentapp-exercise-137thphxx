@@ -1,0 +1,32 @@
+[% extends  "base.htm1"%}
+
+{%- block content %}
+     <h1>Create a new class</h1>
+     {% if form %}
+     <form action="" method="POST">
+         {{form.hidden_tag()}}
+         <p>{{ form.major.label¡¤}}</p>
+         <p>{{ form.major(class = 'text in put') }}</p>
+
+         {% for error in form.major.errors %}
+         <span style="color: red;">[{{ erro }}]</span>
+         {% endfor %}
+
+         <p>{{ form.coursenum.labe1 }}</p>
+         <p>{{ form.coursenum(class = 'text in put')}}</p>
+
+         {% for error in form.coursenum.errors %}
+         <span style="color: red;">[{{ erro }}]</span>
+         {% endfor %}
+
+         <p>{{form.title.label¡¤}}</p>
+         <P>{{ form.title(class = 'text in put')}}</P>
+
+         {% for error in form.title.errors %}
+         <span style="color: red;">[{{ erro }}]</span>
+         {% endfor %}
+
+         <p>{{ form.submit(class='button')}}</p>
+     </form>
+     {% endif %}
+{% endblock %}
