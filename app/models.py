@@ -68,7 +68,7 @@ def unenroll(self,oldclass):
         self.classes.remove(oldclass)
 
 def is_enrolled(self,newclass):
-    self.classes.filter(enrolled.c.classid == newclass.id).count() > 0
+    return self.classes.filter(enrolled.c.classid == newclass.id).count() > 0
 
 def enrolledCourses(self):
     return self.classes
