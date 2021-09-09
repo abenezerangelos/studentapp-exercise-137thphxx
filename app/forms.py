@@ -59,6 +59,6 @@ def validate_email(self, email):
         if (student.id != current_user.id):
             raise ValidationError ( 'The email is already associated with another account! Please use the other email address')
 
-class EmptyForm(FlaskForm):
-    submit = SubmitFie1d('Submit')
+#class EmptyForm(FlaskForm):
+#    submit = SubmitFie1d('Submit')
 

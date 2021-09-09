@@ -24,7 +24,6 @@ def initDB(*args, **kwargs):
 @app.route('/index', methods=['GET'])
 @login_required
 def index():
-    emptyform = EmptyForm
     allclasses = Class.query.order_by(Class.major).all()
     return render_template('index.html', title="Course List", classes = allclasses, eform = emptyform)
 
@@ -85,8 +84,7 @@ def logout():
 @app.route('/display_profile', methods=['GET'])
 @login_required
 def display_profile():
-    emptyform = EmptyForm
-    return render_template('display_profile.html', title='Display Profile', student = current_user, eform = emptyform)
+    return render_template('display_profile.html', title='Display Profile', student = current_user)
 
 
 @app.route('/edit_profile', methods=['GET'])
@@ -122,32 +120,26 @@ def roster(classid):
 
 @app.route('/enroll/<classid>', methods=['POST'])
 @login_required
-def enroll(classid):
-    eform = EmptyForm()
-    if eform.validate_on_submit():
-        theclass = Class.query.filter_by(id=classid).first()
-        if theclass is None:
-            flash('Class with id "{}"  not found.'.format(classid))
-            return redirect(url_for('index'))
-        current_user.enroll(theclass)
-        db.session.commit()
-        flash('You are now enrolled in class {} {}!'.format(theclass.major, theclass.coursenum))
+def enroll(classid):  
+    theclass = Class.query.filter_by(id=classid).first()
+    if theclass is None:
+        flash('Class with id "{}"  not found.'.format(classid))
         return redirect(url_for('index'))
-    else:
-        return redirect(url_for('index'))
+    current_user.enroll(theclass)
+    db.session.commit()
+    flash('You are now enrolled in class {} {}!'.format(theclass.major, theclass.coursenum))
+    return redirect(url_for('index'))
+
 
 @app.route('/unenroll/<classid>', methods=['POST'])
 @login_required
 def unenroll(classid):
-    eform = EmptyForm()
-    if eform.validate_on_submit():
-        theclass = Class.query.filter_by(id=classid).first()
-        if theclass is None:
-            flash('Class with id "{}"  not found.'.format(classid))
-            return redirect(url_for('index'))
-        current_user.unenroll(theclass)
-        db.session.commit()
-        flash('You are now un-enrolled in class {} {}!'.format(theclass.major, theclass.coursenum))
+    theclass = Class.query.filter_by(id=classid).first()
+    if theclass is None:
+        flash('Class with id "{}"  not found.'.format(classid))
         return redirect(url_for('index'))
-    else:
-        return redirect(url_for('index'))
+    current_user.unenroll(theclass)
+    db.session.commit()
+    flash('You are now un-enrolled in class {} {}!'.format(theclass.major, theclass.coursenum))
+    return redirect(url_for('index'))
+    
