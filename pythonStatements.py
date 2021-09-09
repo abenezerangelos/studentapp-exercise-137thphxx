@@ -38,8 +38,8 @@ s2 = Student.query.filter_by(username='john').first()
 c2.roster.append(s2)
 db.session.commit()
 
-for c in s2.classes:
-    print(c)
-for s in c2.roster:
-    print(s)
+for m in s1.majorofstudent:
+    print(m._major)
+for s in major2.studentsmajor:
+    print(s._student)
 
