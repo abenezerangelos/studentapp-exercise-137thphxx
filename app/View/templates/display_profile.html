@@ -19,7 +19,7 @@
 
 
     {% if student == current_user %}
-        <p><a href="{{url_for( 'edit_profile')}}">Edit your profile</a></P>
+        <p><a href="{{url_for('routes.edit_profile')}}">Edit your profile</a></P>
     {% endif %}
 
 {% endblock %}
