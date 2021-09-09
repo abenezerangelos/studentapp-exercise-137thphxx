@@ -2,6 +2,9 @@
 
 from app import db
 from app.models import Student, Class, enrolled
+from datetime import datetime
+
+db.create.all()
 
 c1 = Class.query.filter_by(coursenum = '321').filter_by(major='Cpts').first()
 c2 = Class.query.filter_by(coursenum = '322').filter_by(major='CptS').first()
