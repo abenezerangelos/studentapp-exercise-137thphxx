@@ -1,23 +1,42 @@
 
 
 from app import db
-#create the database file, if it doesn't exist. 
-db.create_all()
+from app.models import Student, Class, enrolled
 
-# import db models
-from app.models import Class
+c1 = Class.query.filter_by(coursenum = '321').filter_by(major='Cpts').first()
+c2 = Class.query.filter_by(coursenum = '322').filter_by(major='CptS').first()
+c3 = Class.query.filter_by(coursenum = '355').filter_by(major='CptS').first()
+c4 = Class.query.filter_by(coursenum = '451').filter_by(major='Cpts').first()
 
-#create class objects and write them to the database
-newClass = Class(coursenum='322')
-db.session.add(newClass)
-newClass = Class(coursenum='355')
-db.session.add(newClass)
+s1= Student.query.filter_by(username= 'sakire').first()
+
+
+s1.classes.append(c2)
+s1.classes.append(c3)
+s1.classes.append(c4)
 db.session.commit()
 
-# query and print classes
-Class.query.all()
-Class.query.filter_by(coursenum='322').all()
-Class.query.filter_by(coursenum='322').first()
-myclasses = Class.query.order_by(Class.coursenum.desc()).all()
-for c in myclasses:
-    print(c.coursenum)
+s1.classes.remove(c4)
+db.session.commit()
+
+# import db models
+from c in s1.classes:
+    print(c)
+
+#create class objects and write them to the database
+
+enrolledClasses = Class.query.join(enrolled,(enrolled.c.classid == Class.id)).filter_by(enrolled.c.studentid == s1.id).order_by(Class.coursenum).all()
+
+#checkif-the  student is-enrolled-in a-given-class
+s1.classes.filter(enrolled.c.classid == c2.id).count() > 0
+
+#we can¡¤also ¡¤add ¡¤students to-a-class' :roster
+s2 = Student.query.filter_by(username='john').first()
+c2.roster.append(s2)
+db.session.commit()
+
+for c in s2.classes:
+    print(c)
+for s in c2.roster:
+    print(s)
+
